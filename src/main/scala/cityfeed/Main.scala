@@ -8,8 +8,8 @@ import akka.http.scaladsl.settings.ServerSettings
 import cakemix.ExecutionContextProvider
 import database.{Migration, TransactorProvider, UserRepository, UserRepositoryProvider}
 import cats.effect.IO
-import cityfeed.application.grpc.RegisterServiceHandler
-import cityfeed.grpc.RegisterImpl
+import cityfeed.application.grpc.{LoginServiceHandler, RegisterServiceHandler}
+import cityfeed.grpc.{LoginImpl, RegisterImpl}
 import com.typesafe.scalalogging.LazyLogging
 
 import scala.concurrent.{ExecutionContextExecutor, Future}
@@ -45,9 +45,12 @@ object Main extends App
       val registerService: PartialFunction[HttpRequest, Future[HttpResponse]] =
         RegisterServiceHandler.partial(new RegisterImpl())
 
-      val grpcWebServiceHandlers = WebHandler.grpcWebHandler(registerService)
+      val loginService: PartialFunction[HttpRequest, Future[HttpResponse]] =
+        LoginServiceHandler.partial(new LoginImpl())
+
+      val grpcWebServiceHandlers = WebHandler.grpcWebHandler(registerService, loginService)
       Http()
-        .newServerAt(interface = "0.0.0.0", port = 5001)
+        .newServerAt(interface = "0.0.0.0", port = port)
         .bind(grpcWebServiceHandlers)
       logger.info(s"Starting up gRPC server on $port port")
   }

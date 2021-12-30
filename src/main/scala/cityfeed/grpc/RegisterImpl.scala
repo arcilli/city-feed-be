@@ -18,13 +18,14 @@ class RegisterImpl(implicit mat: Materializer) extends RegisterService with Lazy
       insertedRows <- userRepository.insertUser(user)
     } yield insertedRows
 
+    // do extra checks in future e.g check if the account exists already before actually trying to insert
     responseIO.attempt.map {
-      case Right(rows) =>
-        logger.info(s"Inserted $rows rows")
-        new RegisterResponse(true)
+      case Right(_) =>
+        logger.info(s"User ${request.username} registered with success!")
+        RegisterResponse(registerSuccess = true)
       case Left(e) =>
         logger.error(s"User registration failed because of error: ${e.getMessage}")
-        new RegisterResponse(false)
+        new RegisterResponse(registerSuccess = false)
     }.unsafeToFuture()
   }
 }

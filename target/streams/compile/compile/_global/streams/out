@@ -1,4 +1,5 @@
-[0m[[0m[31merror[0m] [0m[0mC:\city-feed\city-feed-be\src\main\scala\cityfeed\Main.scala:12:8: object AuthenticationServer is not a member of package cityfeed.grpc[0m
-[0m[[0m[31merror[0m] [0m[0mimport cityfeed.grpc.{AuthenticationServer, RegisterImpl}[0m
-[0m[[0m[31merror[0m] [0m[0m       ^[0m
-[0m[[0m[31merror[0m] [0m[0mone error found[0m
+[0m[[0m[33mwarn[0m] [0m[0mC:\city-feed\city-feed-be\src\main\scala\cityfeed\grpc\LoginImpl.scala:18:28: match may not be exhaustive.[0m
+[0m[[0m[33mwarn[0m] [0m[0mIt would fail on the following input: Right(None)[0m
+[0m[[0m[33mwarn[0m] [0m[0m    responseIO.attempt.map {[0m
+[0m[[0m[33mwarn[0m] [0m[0m                           ^[0m
+[0m[[0m[33mwarn[0m] [0m[0mone warning found[0m
