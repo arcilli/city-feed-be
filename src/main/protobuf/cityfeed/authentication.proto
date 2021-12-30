@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "cityfeed.application.grpc";
+option java_outer_classname = "AuthenticationProto";
+
+package auth;
+
+service RegisterService {
+  rpc RegisterUser (RegisterRequest) returns (RegisterResponse) {}
+}
+
+service LoginService {
+  rpc CheckCredentials (LoginRequest) returns (LoginResponse) {}
+}
+
+message LoginRequest {
+  string email_address = 1;
+  string password = 2;
+}
+
+message LoginResponse {
+  bool loginSuccess = 1;
+}
+
+message RegisterRequest {
+  string email_address = 1;
+  string username = 2;
+  string full_name = 3;
+  string password = 4;
+  string address = 5;
+  string city = 6;
+  string neighborhood = 7;
+}
+
+message RegisterResponse {
+  bool registerSuccess = 1;
+}

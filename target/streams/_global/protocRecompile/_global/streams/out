@@ -1,0 +1,6 @@
+[0m[[0m[0minfo[0m] [0m[0mGenerating Akka gRPC service interface for cityfeed.application.grpc.RegisterService[0m
+[0m[[0m[0minfo[0m] [0m[0mGenerating Akka gRPC service interface for cityfeed.application.grpc.LoginService[0m
+[0m[[0m[0minfo[0m] [0m[0mGenerating Akka gRPC client for cityfeed.application.grpc.RegisterService[0m
+[0m[[0m[0minfo[0m] [0m[0mGenerating Akka gRPC client for cityfeed.application.grpc.LoginService[0m
+[0m[[0m[0minfo[0m] [0m[0mGenerating Akka gRPC service handler for cityfeed.application.grpc.RegisterService[0m
+[0m[[0m[0minfo[0m] [0m[0mGenerating Akka gRPC service handler for cityfeed.application.grpc.LoginService[0m
