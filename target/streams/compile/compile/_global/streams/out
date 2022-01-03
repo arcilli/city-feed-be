@@ -1,5 +1,6 @@
-[0m[[0m[33mwarn[0m] [0m[0mC:\city-feed\city-feed-be\src\main\scala\cityfeed\grpc\LoginImpl.scala:18:28: match may not be exhaustive.[0m
-[0m[[0m[33mwarn[0m] [0m[0mIt would fail on the following input: Right(None)[0m
-[0m[[0m[33mwarn[0m] [0m[0m    responseIO.attempt.map {[0m
-[0m[[0m[33mwarn[0m] [0m[0m                           ^[0m
-[0m[[0m[33mwarn[0m] [0m[0mone warning found[0m
+[0m[[0m[31merror[0m] [0m[0mC:\city-feed\city-feed-be\src\main\scala\cityfeed\database\UserRepository.scala:114:38: missing argument list for method raiseWhen in object IO[0m
+[0m[[0m[31merror[0m] [0m[0mUnapplied methods are only converted to functions when a function type is expected.[0m
+[0m[[0m[31merror[0m] [0m[0mYou can make this conversion explicit by writing `raiseWhen _` or `raiseWhen(_)(_)` instead of `raiseWhen`.[0m
+[0m[[0m[31merror[0m] [0m[0m        .flatMap(user => IO.raiseWhen(user == null) )[0m
+[0m[[0m[31merror[0m] [0m[0m                                     ^[0m
+[0m[[0m[31merror[0m] [0m[0mone error found[0m

@@ -1,5 +1,8 @@
 [0m[[0m[0mdebug[0m] [0m[0mCopy resource mappings: [0m
 [0m[[0m[0mdebug[0m] [0m[0m	(C:\city-feed\city-feed-be\src\main\protobuf\cityfeed\authentication.proto,C:\city-feed\city-feed-be\target\scala-2.13\classes\cityfeed\authentication.proto)[0m
+[0m[[0m[0mdebug[0m] [0m[0m	(C:\city-feed\city-feed-be\src\main\protobuf\cityfeed\feed.proto,C:\city-feed\city-feed-be\target\scala-2.13\classes\cityfeed\feed.proto)[0m
 [0m[[0m[0mdebug[0m] [0m[0m	(C:\city-feed\city-feed-be\src\main\resources\application.conf,C:\city-feed\city-feed-be\target\scala-2.13\classes\application.conf)[0m
 [0m[[0m[0mdebug[0m] [0m[0m	(C:\city-feed\city-feed-be\src\main\resources\db\migrations\V1__Create_users_tables.sql,C:\city-feed\city-feed-be\target\scala-2.13\classes\db\migrations\V1__Create_users_tables.sql)[0m
 [0m[[0m[0mdebug[0m] [0m[0m	(C:\city-feed\city-feed-be\src\main\resources\db\migrations\V2__Make_unique_columns.sql,C:\city-feed\city-feed-be\target\scala-2.13\classes\db\migrations\V2__Make_unique_columns.sql)[0m
+[0m[[0m[0mdebug[0m] [0m[0m	(C:\city-feed\city-feed-be\src\main\resources\db\migrations\V3__Create_posts_table.sql,C:\city-feed\city-feed-be\target\scala-2.13\classes\db\migrations\V3__Create_posts_table.sql)[0m
+[0m[[0m[0mdebug[0m] [0m[0m	(C:\city-feed\city-feed-be\src\main\resources\db\migrations\V4__Add_posts_queue_in_user_info.sql,C:\city-feed\city-feed-be\target\scala-2.13\classes\db\migrations\V4__Add_posts_queue_in_user_info.sql)[0m

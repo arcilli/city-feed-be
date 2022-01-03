@@ -7,7 +7,7 @@ package cityfeed.application.grpc
 
 @SerialVersionUID(0L)
 final case class LoginResponse(
-    loginSuccess: _root_.scala.Boolean = false,
+    loggedUserId: _root_.scala.Predef.String = "",
     unknownFields: _root_.scalapb.UnknownFieldSet = _root_.scalapb.UnknownFieldSet.empty
     ) extends scalapb.GeneratedMessage with scalapb.lenses.Updatable[LoginResponse] {
     @transient
@@ -16,9 +16,9 @@ final case class LoginResponse(
       var __size = 0
       
       {
-        val __value = loginSuccess
-        if (__value != false) {
-          __size += _root_.com.google.protobuf.CodedOutputStream.computeBoolSize(1, __value)
+        val __value = loggedUserId
+        if (!__value.isEmpty) {
+          __size += _root_.com.google.protobuf.CodedOutputStream.computeStringSize(1, __value)
         }
       };
       __size += unknownFields.serializedSize
@@ -35,28 +35,28 @@ final case class LoginResponse(
     }
     def writeTo(`_output__`: _root_.com.google.protobuf.CodedOutputStream): _root_.scala.Unit = {
       {
-        val __v = loginSuccess
-        if (__v != false) {
-          _output__.writeBool(1, __v)
+        val __v = loggedUserId
+        if (!__v.isEmpty) {
+          _output__.writeString(1, __v)
         }
       };
       unknownFields.writeTo(_output__)
     }
-    def withLoginSuccess(__v: _root_.scala.Boolean): LoginResponse = copy(loginSuccess = __v)
+    def withLoggedUserId(__v: _root_.scala.Predef.String): LoginResponse = copy(loggedUserId = __v)
     def withUnknownFields(__v: _root_.scalapb.UnknownFieldSet) = copy(unknownFields = __v)
     def discardUnknownFields = copy(unknownFields = _root_.scalapb.UnknownFieldSet.empty)
     def getFieldByNumber(__fieldNumber: _root_.scala.Int): _root_.scala.Any = {
       (__fieldNumber: @_root_.scala.unchecked) match {
         case 1 => {
-          val __t = loginSuccess
-          if (__t != false) __t else null
+          val __t = loggedUserId
+          if (__t != "") __t else null
         }
       }
     }
     def getField(__field: _root_.scalapb.descriptors.FieldDescriptor): _root_.scalapb.descriptors.PValue = {
       _root_.scala.Predef.require(__field.containingMessage eq companion.scalaDescriptor)
       (__field.number: @_root_.scala.unchecked) match {
-        case 1 => _root_.scalapb.descriptors.PBoolean(loginSuccess)
+        case 1 => _root_.scalapb.descriptors.PString(loggedUserId)
       }
     }
     def toProtoString: _root_.scala.Predef.String = _root_.scalapb.TextFormat.printToUnicodeString(this)
@@ -67,15 +67,15 @@ final case class LoginResponse(
 object LoginResponse extends scalapb.GeneratedMessageCompanion[cityfeed.application.grpc.LoginResponse] {
   implicit def messageCompanion: scalapb.GeneratedMessageCompanion[cityfeed.application.grpc.LoginResponse] = this
   def parseFrom(`_input__`: _root_.com.google.protobuf.CodedInputStream): cityfeed.application.grpc.LoginResponse = {
-    var __loginSuccess: _root_.scala.Boolean = false
+    var __loggedUserId: _root_.scala.Predef.String = ""
     var `_unknownFields__`: _root_.scalapb.UnknownFieldSet.Builder = null
     var _done__ = false
     while (!_done__) {
       val _tag__ = _input__.readTag()
       _tag__ match {
         case 0 => _done__ = true
-        case 8 =>
-          __loginSuccess = _input__.readBool()
+        case 10 =>
+          __loggedUserId = _input__.readStringRequireUtf8()
         case tag =>
           if (_unknownFields__ == null) {
             _unknownFields__ = new _root_.scalapb.UnknownFieldSet.Builder()
@@ -84,7 +84,7 @@ object LoginResponse extends scalapb.GeneratedMessageCompanion[cityfeed.applicat
       }
     }
     cityfeed.application.grpc.LoginResponse(
-        loginSuccess = __loginSuccess,
+        loggedUserId = __loggedUserId,
         unknownFields = if (_unknownFields__ == null) _root_.scalapb.UnknownFieldSet.empty else _unknownFields__.result()
     )
   }
@@ -92,7 +92,7 @@ object LoginResponse extends scalapb.GeneratedMessageCompanion[cityfeed.applicat
     case _root_.scalapb.descriptors.PMessage(__fieldsMap) =>
       _root_.scala.Predef.require(__fieldsMap.keys.forall(_.containingMessage eq scalaDescriptor), "FieldDescriptor does not match message type.")
       cityfeed.application.grpc.LoginResponse(
-        loginSuccess = __fieldsMap.get(scalaDescriptor.findFieldByNumber(1).get).map(_.as[_root_.scala.Boolean]).getOrElse(false)
+        loggedUserId = __fieldsMap.get(scalaDescriptor.findFieldByNumber(1).get).map(_.as[_root_.scala.Predef.String]).getOrElse("")
       )
     case _ => throw new RuntimeException("Expected PMessage")
   }
@@ -102,16 +102,16 @@ object LoginResponse extends scalapb.GeneratedMessageCompanion[cityfeed.applicat
   lazy val nestedMessagesCompanions: Seq[_root_.scalapb.GeneratedMessageCompanion[_ <: _root_.scalapb.GeneratedMessage]] = Seq.empty
   def enumCompanionForFieldNumber(__fieldNumber: _root_.scala.Int): _root_.scalapb.GeneratedEnumCompanion[_] = throw new MatchError(__fieldNumber)
   lazy val defaultInstance = cityfeed.application.grpc.LoginResponse(
-    loginSuccess = false
+    loggedUserId = ""
   )
   implicit class LoginResponseLens[UpperPB](_l: _root_.scalapb.lenses.Lens[UpperPB, cityfeed.application.grpc.LoginResponse]) extends _root_.scalapb.lenses.ObjectLens[UpperPB, cityfeed.application.grpc.LoginResponse](_l) {
-    def loginSuccess: _root_.scalapb.lenses.Lens[UpperPB, _root_.scala.Boolean] = field(_.loginSuccess)((c_, f_) => c_.copy(loginSuccess = f_))
+    def loggedUserId: _root_.scalapb.lenses.Lens[UpperPB, _root_.scala.Predef.String] = field(_.loggedUserId)((c_, f_) => c_.copy(loggedUserId = f_))
   }
-  final val LOGINSUCCESS_FIELD_NUMBER = 1
+  final val LOGGED_USER_ID_FIELD_NUMBER = 1
   def of(
-    loginSuccess: _root_.scala.Boolean
+    loggedUserId: _root_.scala.Predef.String
   ): _root_.cityfeed.application.grpc.LoginResponse = _root_.cityfeed.application.grpc.LoginResponse(
-    loginSuccess
+    loggedUserId
   )
   // @@protoc_insertion_point(GeneratedMessageCompanion[auth.LoginResponse])
 }

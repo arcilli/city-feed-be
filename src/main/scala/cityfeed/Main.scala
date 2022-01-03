@@ -6,10 +6,10 @@ import akka.http.scaladsl.Http
 import akka.http.scaladsl.model.{HttpRequest, HttpResponse}
 import akka.http.scaladsl.settings.ServerSettings
 import cakemix.ExecutionContextProvider
-import database.{Migration, TransactorProvider, UserRepository, UserRepositoryProvider}
+import database.{Migration, PostingRepository, PostingRepositoryProvider, TransactorProvider, UserRepository, UserRepositoryProvider}
 import cats.effect.IO
-import cityfeed.application.grpc.{LoginServiceHandler, RegisterServiceHandler}
-import cityfeed.grpc.{LoginImpl, RegisterImpl}
+import cityfeed.application.grpc.{LoginServiceHandler, PostingService, PostingServiceHandler, RegisterServiceHandler}
+import cityfeed.grpc.{LoginImpl, PostingImpl, RegisterImpl}
 import com.typesafe.scalalogging.LazyLogging
 
 import scala.concurrent.{ExecutionContextExecutor, Future}
@@ -19,6 +19,7 @@ object Main extends App
   with ExecutionContextProvider
   with TransactorProvider
   with UserRepositoryProvider[IO]
+  with PostingRepositoryProvider[IO]
   with LazyLogging {
 
   implicit val system: ActorSystem = ActorSystem("cityfeed")
@@ -26,6 +27,7 @@ object Main extends App
   implicit lazy val settings: Settings = Settings(system)
   override implicit val transactor = TransactorProvider.instance(settings, executionContext)
   override val userRepository = UserRepository.instance(transactor)
+  override val postingRepository = PostingRepository.instance(transactor)
 
   val port = settings.grpc.port
 
@@ -48,7 +50,10 @@ object Main extends App
       val loginService: PartialFunction[HttpRequest, Future[HttpResponse]] =
         LoginServiceHandler.partial(new LoginImpl())
 
-      val grpcWebServiceHandlers = WebHandler.grpcWebHandler(registerService, loginService)
+      val createPostService: PartialFunction[HttpRequest, Future[HttpResponse]] =
+        PostingServiceHandler.partial(new PostingImpl())
+
+      val grpcWebServiceHandlers = WebHandler.grpcWebHandler(registerService, loginService, createPostService)
       Http()
         .newServerAt(interface = "0.0.0.0", port = port)
         .bind(grpcWebServiceHandlers)

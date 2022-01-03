@@ -13,18 +13,19 @@ class LoginImpl(implicit mat: Materializer) extends LoginService with LazyLoggin
   override def checkCredentials(request: LoginRequest): Future[LoginResponse] = {
     val responseIO = for {
       userAccount <- userRepository.checkCredentials(request.emailAddress, request.password)
-    } yield userAccount
+      userId <- userRepository.getUserProfileIdBasedOnAccountId(userAccount.map(userAccount => userAccount.id).get)
+    } yield userId
 
     responseIO.attempt.map {
-      case Right(Some(user)) =>
-        logger.info(s"User with email ${user.email_address} logged in successfully.")
-        LoginResponse(loginSuccess = true)
+      case Right(userId) =>
+        logger.info(s"User with id $userId logged in successfully.")
+        LoginResponse(loggedUserId = userId.toString)
       case Left(e: NonExistentAccount) =>
         logger.error(e.getMessage)
-        LoginResponse()
+        LoginResponse(loggedUserId = "notfound")
       case Left(e: WrongCredentials) =>
         logger.error(e.getMessage)
-        LoginResponse()
+        LoginResponse(loggedUserId = "wrongcreds")
       case Left(e) =>
       logger.error(s"Internal server error: ${e.getMessage}")
       LoginResponse()

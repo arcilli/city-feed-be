@@ -12,7 +12,7 @@ import scala.concurrent.Future
 class RegisterImpl(implicit mat: Materializer) extends RegisterService with LazyLogging {
   override def registerUser(request: RegisterRequest): Future[RegisterResponse] = {
     val credentials = UserCredentials(UUID.randomUUID(), request.username, request.emailAddress, request.password)
-    val user = User(None, request.fullName, request.city, request.address, request.neighborhood, credentials)
+    val user = User(Some(UUID.randomUUID()), request.fullName, request.city, request.address, request.neighborhood, Some(credentials))
 
     val responseIO = for {
       insertedRows <- userRepository.insertUser(user)

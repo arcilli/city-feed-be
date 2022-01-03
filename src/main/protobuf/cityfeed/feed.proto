@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "cityfeed.application.grpc";
+option java_outer_classname = "FeedProto";
+
+package feed;
+
+service PostingService {
+    rpc CreatePost (PostRequest) returns (PostResponse) {}
+}
+
+message PostRequest {
+    string message = 1;
+    string base64Image = 2;
+    string location = 3;
+    string tags = 4;
+    string user_token = 5;
+}
+
+message PostResponse {
+    bool postCreated = 1;
+}

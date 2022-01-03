@@ -16,13 +16,15 @@ import java.util.UUID
 trait UserRepository[F[_]] {
   def insertUser(user: User): F[Int]
   def checkCredentials(email_address: String, password: String): F[Option[UserCredentials]]
+  def getUserInfoById(userId: UUID): F[User]
+  def getUserProfileIdBasedOnAccountId(accountId: UUID): F[UUID]
 }
 
 object UserRepository {
   implicit def instance(implicit xa: Transactor[IO]): UserRepository[IO] = new UserRepository[IO] {
     override def insertUser(user: User): IO[Int] = {
       val queries = for {
-        _ <- insertUserCredentials(user.credentials)
+        _ <- insertUserCredentials(user.credentials.get)
         rows <- insertUserInfo(user)
       } yield rows
       queries.transact(xa)
@@ -31,17 +33,19 @@ object UserRepository {
     private def insertUserInfo(user: User): ConnectionIO[Int] = {
       sql"""
            | INSERT INTO users_info(
+           | id,
            | full_name,
            | city,
            | home_address,
            | neighborhood,
            | credentials_key
            |) VALUES (
+           | ${user.id},
            | ${user.fullName},
            | ${user.city},
            | ${user.homeAddress},
            | ${user.neighborhood},
-           | ${user.credentials.id}
+           | ${user.credentials.get.id}
            |)
            |""".stripMargin.update.run
     }
@@ -96,6 +100,40 @@ object UserRepository {
         .option
         .transact(xa)
     }
+
+    override def getUserInfoById(userId: UUID): IO[User] = {
+      sql"""
+            | SELECT id, full_name, city, home_address, neighborhood
+            | FROM users_info
+            | WHERE id = $userId
+           """
+        .stripMargin
+        .query[(Option[UUID], String, String, String, String)]
+        .map {
+          case(id, fullname, city, home_address, neighborhood) =>
+            User(
+              id = id,
+              fullName = fullname,
+              city = city,
+              homeAddress = home_address,
+              neighborhood = neighborhood,
+              credentials = None
+            )
+        }
+        .unique
+        .transact(xa)
+    }
+
+    override def getUserProfileIdBasedOnAccountId(accountId: UUID): IO[UUID] =
+      sql"""
+            | SELECT id FROM users_info
+            | WHERE users_info.credentials_key = $accountId
+           """
+        .stripMargin
+        .query[UUID]
+        .unique
+        .transact(xa)
+
   }
 }
 

@@ -1,1 +1,2 @@
-ALTER TABLE users_credentials ADD UNIQUE (username, email_address);
+ALTER TABLE users_credentials ADD UNIQUE (username);
+ALTER TABLE users_credentials ADD UNIQUE (email_address);

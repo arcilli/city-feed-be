@@ -11,7 +11,8 @@ val doobieVersion = "0.9.4"
 
 lazy val root = Project("city-feed-be", file("."))
   .settings(
-    IntegrationTest / fork := false
+    IntegrationTest / fork := false,
+    fork := true
   )
   .settings(
     //debugSettings in reStart := Some(DebugSettings(5005, suspend = false)),

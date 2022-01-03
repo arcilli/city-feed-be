@@ -10,10 +10,10 @@ case class UserCredentials(
 )
 
 case class User(
-  id: Option[Int],
+  id: Option[UUID],
   fullName: String,
   city: String,
   homeAddress: String,
   neighborhood: String,
-  credentials: UserCredentials
+  credentials: Option[UserCredentials]
 )

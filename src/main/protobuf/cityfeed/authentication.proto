@@ -20,7 +20,7 @@ message LoginRequest {
 }
 
 message LoginResponse {
-  bool loginSuccess = 1;
+  string logged_user_id = 1;
 }
 
 message RegisterRequest {
