@@ -10,7 +10,6 @@ import scala.concurrent.Future
 
 class PostingImpl(implicit mat: Materializer) extends PostingService with LazyLogging {
   override def createPost(request: PostRequest): Future[PostResponse] = {
-    logger.info(s"received request: $request")
     val responseIO = for {
       userInfo <- userRepository.getUserInfoById(UUID.fromString(request.userToken))
       _ <- postingRepository.savePostInDB(request, userInfo)

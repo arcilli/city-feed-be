@@ -25,6 +25,7 @@ lazy val root = Project("city-feed-be", file("."))
       "org.tpolecat"               %% "doobie-h2"                 % doobieVersion,
       "org.tpolecat"               %% "doobie-hikari"             % doobieVersion,
       "org.tpolecat"               %% "doobie-postgres"           % doobieVersion,
+      "org.tpolecat"               %% "doobie-postgres-circe"     % doobieVersion,
       "org.tpolecat"               %% "doobie-specs2"             % doobieVersion   % "test",
       "org.tpolecat"               %% "doobie-scalatest"          % doobieVersion   % "test",
       "org.scalatest"              %% "scalatest"                 % "3.2.9"         % "test",
@@ -39,10 +40,13 @@ lazy val root = Project("city-feed-be", file("."))
       "com.typesafe.akka"          %% "akka-discovery"            % akkaVersion,
       "com.typesafe.akka"          %% "akka-actor-testkit-typed"  % akkaVersion % Test,
       "nl.wehkamp.cakemix"         %% "cakemix"                   % "1.3.0",
+      "io.circe"                   %% "circe-parser"              % "0.14.1",
+      "io.circe"                   %% "circe-core"                % "0.14.1",
+      "io.circe"                   %% "circe-generic"             % "0.14.1",
       "com.github.pureconfig"      %% "pureconfig"                % "0.17.1",
       "ch.megard"                  %% "akka-http-cors"            % "0.4.2",
       "org.flywaydb"                % "flyway-core"               % "6.2.1",
-      "ch.qos.logback"              % "logback-classic" % "1.1.2"
+      "ch.qos.logback"              % "logback-classic"           % "1.1.2"
     )
   )
 

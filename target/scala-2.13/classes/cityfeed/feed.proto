@@ -1,5 +1,7 @@
 syntax = "proto3";
 
+import "google/protobuf/timestamp.proto";
+
 option java_multiple_files = true;
 option java_package = "cityfeed.application.grpc";
 option java_outer_classname = "FeedProto";
@@ -8,6 +10,10 @@ package feed;
 
 service PostingService {
     rpc CreatePost (PostRequest) returns (PostResponse) {}
+}
+
+service FetchService {
+    rpc fetchPosts (FetchRequest) returns (stream FetchedPosts) {}
 }
 
 message PostRequest {
@@ -21,3 +27,20 @@ message PostRequest {
 message PostResponse {
     bool postCreated = 1;
 }
+
+message FetchRequest {
+    int32 amount = 1;
+    string userId = 2;
+    repeated int32 seenPosts = 3;
+}
+
+message FetchedPosts {
+    string ownerUser = 1;
+    string message = 2;
+    string base64Image = 3;
+    string neighborhood = 4;
+    repeated string tags = 5;
+    google.protobuf.Timestamp creationDate = 6;
+    bool edited = 7;
+}
+

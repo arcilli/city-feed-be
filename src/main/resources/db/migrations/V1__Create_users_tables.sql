@@ -7,7 +7,7 @@
 
 CREATE OR REPLACE FUNCTION set_update_date() RETURNS TRIGGER AS $set_update_date$
 BEGIN
-    NEW.modified_date := now();
+    NEW.update_date := now();
     RETURN NEW;
 END
 $set_update_date$ LANGUAGE plpgsql;

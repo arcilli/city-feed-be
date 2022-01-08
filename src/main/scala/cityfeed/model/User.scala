@@ -15,5 +15,6 @@ case class User(
   city: String,
   homeAddress: String,
   neighborhood: String,
-  credentials: Option[UserCredentials]
+  credentials: Option[UserCredentials],
+  seenPosts: List[Int] = List.empty
 )

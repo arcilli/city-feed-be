@@ -3,6 +3,7 @@ package cityfeed.database
 import cats.effect.IO
 import cityfeed.errors.Errors.{NonExistentAccount, WrongCredentials}
 import cityfeed.model.{User, UserCredentials}
+import com.typesafe.scalalogging.LazyLogging
 import doobie.ConnectionIO
 import doobie.implicits._
 import doobie.postgres.implicits._
@@ -18,9 +19,10 @@ trait UserRepository[F[_]] {
   def checkCredentials(email_address: String, password: String): F[Option[UserCredentials]]
   def getUserInfoById(userId: UUID): F[User]
   def getUserProfileIdBasedOnAccountId(accountId: UUID): F[UUID]
+  def updateAndGetViewedPostsByUser(userId: UUID, viewedPosts: List[Long]): F[List[Int]]
 }
 
-object UserRepository {
+object UserRepository extends LazyLogging{
   implicit def instance(implicit xa: Transactor[IO]): UserRepository[IO] = new UserRepository[IO] {
     override def insertUser(user: User): IO[Int] = {
       val queries = for {
@@ -134,6 +136,35 @@ object UserRepository {
         .unique
         .transact(xa)
 
+    override def updateAndGetViewedPostsByUser(userId: UUID, viewedPosts: List[Long]): IO[List[Int]] = {
+      val queries = for {
+        _ <- updateViewedPosts(viewedPosts)
+        viewedPosts <- getViewedPosts(userId)
+      } yield viewedPosts
+      queries.transact(xa)
+    }
+
+    private def updateViewedPosts(postsId: List[Long]): ConnectionIO[Int] = {
+      sql"""
+            | UPDATE users_info
+            | SET seen_posts = seen_posts || ($postsId);
+           """
+        .stripMargin
+        .update
+        .run
+    }
+
+    private def getViewedPosts(id: UUID): ConnectionIO[List[Int]] = {
+      sql"""
+            | SELECT seen_posts FROM users_info
+            | WHERE seen_posts != '{}' AND id = $id
+           """
+        .stripMargin
+        .query[Int]
+        .stream
+        .compile
+        .toList
+    }
   }
 }
 

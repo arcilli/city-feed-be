@@ -6,6 +6,10 @@ object Errors {
   }
 
   case class WrongCredentials(email_address: String) extends Throwable {
-    override def getMessage: String = s" The email address or password are incorrect"
+    override def getMessage: String = s"The email address or password are incorrect"
+  }
+
+  case class NoFetchedPosts() extends Throwable {
+    override def getMessage: String = s"Couldn't find any posts at the moment"
   }
 }
