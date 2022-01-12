@@ -36,11 +36,12 @@ message FetchRequest {
 
 message FetchedPosts {
     string ownerUser = 1;
-    string message = 2;
-    string base64Image = 3;
-    string neighborhood = 4;
-    repeated string tags = 5;
-    google.protobuf.Timestamp creationDate = 6;
-    bool edited = 7;
+    string username = 2;
+    string message = 3;
+    string base64Image = 4;
+    string neighborhood = 5;
+    repeated string tags = 6;
+    string timestamp = 7;
+    bool edited = 8;
 }
 

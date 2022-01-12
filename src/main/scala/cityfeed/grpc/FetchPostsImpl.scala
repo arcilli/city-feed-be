@@ -15,7 +15,6 @@ import java.util.UUID
 
 class FetchPostsImpl(implicit mat: Materializer) extends FetchService with LazyLogging{
   override def fetchPosts(request: FetchRequest): Source[FetchedPosts, NotUsed] = {
-    logger.info(s"$request")
     val responseIO = for {
       userInfo <- userRepository.getUserInfoById(UUID.fromString(request.userId))
       viewedPosts <- userRepository.updateAndGetViewedPostsByUser(userInfo.id.get, request.seenPosts.toList.map(_.toLong))
@@ -25,6 +24,7 @@ class FetchPostsImpl(implicit mat: Materializer) extends FetchService with LazyL
 
     responseIO.attempt.unsafeRunSync() match {
       case Right(fetchedPosts) =>
+        logger.debug("Fetch posts with success")
         Source(fetchedPosts)
       case Left(e: NoFetchedPosts) =>
         logger.error(e.getMessage)

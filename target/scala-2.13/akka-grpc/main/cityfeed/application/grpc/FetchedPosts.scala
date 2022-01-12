@@ -8,11 +8,12 @@ package cityfeed.application.grpc
 @SerialVersionUID(0L)
 final case class FetchedPosts(
     ownerUser: _root_.scala.Predef.String = "",
+    username: _root_.scala.Predef.String = "",
     message: _root_.scala.Predef.String = "",
     base64Image: _root_.scala.Predef.String = "",
     neighborhood: _root_.scala.Predef.String = "",
     tags: _root_.scala.Seq[_root_.scala.Predef.String] = _root_.scala.Seq.empty,
-    creationDate: _root_.scala.Option[com.google.protobuf.timestamp.Timestamp] = _root_.scala.None,
+    timestamp: _root_.scala.Predef.String = "",
     edited: _root_.scala.Boolean = false,
     unknownFields: _root_.scalapb.UnknownFieldSet = _root_.scalapb.UnknownFieldSet.empty
     ) extends scalapb.GeneratedMessage with scalapb.lenses.Updatable[FetchedPosts] {
@@ -29,38 +30,48 @@ final case class FetchedPosts(
       };
       
       {
-        val __value = message
+        val __value = username
         if (!__value.isEmpty) {
           __size += _root_.com.google.protobuf.CodedOutputStream.computeStringSize(2, __value)
         }
       };
       
       {
-        val __value = base64Image
+        val __value = message
         if (!__value.isEmpty) {
           __size += _root_.com.google.protobuf.CodedOutputStream.computeStringSize(3, __value)
         }
       };
       
       {
-        val __value = neighborhood
+        val __value = base64Image
         if (!__value.isEmpty) {
           __size += _root_.com.google.protobuf.CodedOutputStream.computeStringSize(4, __value)
         }
       };
+      
+      {
+        val __value = neighborhood
+        if (!__value.isEmpty) {
+          __size += _root_.com.google.protobuf.CodedOutputStream.computeStringSize(5, __value)
+        }
+      };
       tags.foreach { __item =>
         val __value = __item
-        __size += _root_.com.google.protobuf.CodedOutputStream.computeStringSize(5, __value)
+        __size += _root_.com.google.protobuf.CodedOutputStream.computeStringSize(6, __value)
       }
-      if (creationDate.isDefined) {
-        val __value = creationDate.get
-        __size += 1 + _root_.com.google.protobuf.CodedOutputStream.computeUInt32SizeNoTag(__value.serializedSize) + __value.serializedSize
+      
+      {
+        val __value = timestamp
+        if (!__value.isEmpty) {
+          __size += _root_.com.google.protobuf.CodedOutputStream.computeStringSize(7, __value)
+        }
       };
       
       {
         val __value = edited
         if (__value != false) {
-          __size += _root_.com.google.protobuf.CodedOutputStream.computeBoolSize(7, __value)
+          __size += _root_.com.google.protobuf.CodedOutputStream.computeBoolSize(8, __value)
         }
       };
       __size += unknownFields.serializedSize
@@ -83,42 +94,49 @@ final case class FetchedPosts(
         }
       };
       {
-        val __v = message
+        val __v = username
         if (!__v.isEmpty) {
           _output__.writeString(2, __v)
         }
       };
       {
-        val __v = base64Image
+        val __v = message
         if (!__v.isEmpty) {
           _output__.writeString(3, __v)
         }
       };
       {
-        val __v = neighborhood
+        val __v = base64Image
         if (!__v.isEmpty) {
           _output__.writeString(4, __v)
         }
       };
+      {
+        val __v = neighborhood
+        if (!__v.isEmpty) {
+          _output__.writeString(5, __v)
+        }
+      };
       tags.foreach { __v =>
         val __m = __v
-        _output__.writeString(5, __m)
+        _output__.writeString(6, __m)
       };
-      creationDate.foreach { __v =>
-        val __m = __v
-        _output__.writeTag(6, 2)
-        _output__.writeUInt32NoTag(__m.serializedSize)
-        __m.writeTo(_output__)
+      {
+        val __v = timestamp
+        if (!__v.isEmpty) {
+          _output__.writeString(7, __v)
+        }
       };
       {
         val __v = edited
         if (__v != false) {
-          _output__.writeBool(7, __v)
+          _output__.writeBool(8, __v)
         }
       };
       unknownFields.writeTo(_output__)
     }
     def withOwnerUser(__v: _root_.scala.Predef.String): FetchedPosts = copy(ownerUser = __v)
+    def withUsername(__v: _root_.scala.Predef.String): FetchedPosts = copy(username = __v)
     def withMessage(__v: _root_.scala.Predef.String): FetchedPosts = copy(message = __v)
     def withBase64Image(__v: _root_.scala.Predef.String): FetchedPosts = copy(base64Image = __v)
     def withNeighborhood(__v: _root_.scala.Predef.String): FetchedPosts = copy(neighborhood = __v)
@@ -126,9 +144,7 @@ final case class FetchedPosts(
     def addTags(__vs: _root_.scala.Predef.String *): FetchedPosts = addAllTags(__vs)
     def addAllTags(__vs: Iterable[_root_.scala.Predef.String]): FetchedPosts = copy(tags = tags ++ __vs)
     def withTags(__v: _root_.scala.Seq[_root_.scala.Predef.String]): FetchedPosts = copy(tags = __v)
-    def getCreationDate: com.google.protobuf.timestamp.Timestamp = creationDate.getOrElse(com.google.protobuf.timestamp.Timestamp.defaultInstance)
-    def clearCreationDate: FetchedPosts = copy(creationDate = _root_.scala.None)
-    def withCreationDate(__v: com.google.protobuf.timestamp.Timestamp): FetchedPosts = copy(creationDate = Option(__v))
+    def withTimestamp(__v: _root_.scala.Predef.String): FetchedPosts = copy(timestamp = __v)
     def withEdited(__v: _root_.scala.Boolean): FetchedPosts = copy(edited = __v)
     def withUnknownFields(__v: _root_.scalapb.UnknownFieldSet) = copy(unknownFields = __v)
     def discardUnknownFields = copy(unknownFields = _root_.scalapb.UnknownFieldSet.empty)
@@ -139,20 +155,27 @@ final case class FetchedPosts(
           if (__t != "") __t else null
         }
         case 2 => {
-          val __t = message
+          val __t = username
           if (__t != "") __t else null
         }
         case 3 => {
-          val __t = base64Image
+          val __t = message
           if (__t != "") __t else null
         }
         case 4 => {
+          val __t = base64Image
+          if (__t != "") __t else null
+        }
+        case 5 => {
           val __t = neighborhood
           if (__t != "") __t else null
         }
-        case 5 => tags
-        case 6 => creationDate.orNull
+        case 6 => tags
         case 7 => {
+          val __t = timestamp
+          if (__t != "") __t else null
+        }
+        case 8 => {
           val __t = edited
           if (__t != false) __t else null
         }
@@ -162,12 +185,13 @@ final case class FetchedPosts(
       _root_.scala.Predef.require(__field.containingMessage eq companion.scalaDescriptor)
       (__field.number: @_root_.scala.unchecked) match {
         case 1 => _root_.scalapb.descriptors.PString(ownerUser)
-        case 2 => _root_.scalapb.descriptors.PString(message)
-        case 3 => _root_.scalapb.descriptors.PString(base64Image)
-        case 4 => _root_.scalapb.descriptors.PString(neighborhood)
-        case 5 => _root_.scalapb.descriptors.PRepeated(tags.iterator.map(_root_.scalapb.descriptors.PString(_)).toVector)
-        case 6 => creationDate.map(_.toPMessage).getOrElse(_root_.scalapb.descriptors.PEmpty)
-        case 7 => _root_.scalapb.descriptors.PBoolean(edited)
+        case 2 => _root_.scalapb.descriptors.PString(username)
+        case 3 => _root_.scalapb.descriptors.PString(message)
+        case 4 => _root_.scalapb.descriptors.PString(base64Image)
+        case 5 => _root_.scalapb.descriptors.PString(neighborhood)
+        case 6 => _root_.scalapb.descriptors.PRepeated(tags.iterator.map(_root_.scalapb.descriptors.PString(_)).toVector)
+        case 7 => _root_.scalapb.descriptors.PString(timestamp)
+        case 8 => _root_.scalapb.descriptors.PBoolean(edited)
       }
     }
     def toProtoString: _root_.scala.Predef.String = _root_.scalapb.TextFormat.printToUnicodeString(this)
@@ -179,11 +203,12 @@ object FetchedPosts extends scalapb.GeneratedMessageCompanion[cityfeed.applicati
   implicit def messageCompanion: scalapb.GeneratedMessageCompanion[cityfeed.application.grpc.FetchedPosts] = this
   def parseFrom(`_input__`: _root_.com.google.protobuf.CodedInputStream): cityfeed.application.grpc.FetchedPosts = {
     var __ownerUser: _root_.scala.Predef.String = ""
+    var __username: _root_.scala.Predef.String = ""
     var __message: _root_.scala.Predef.String = ""
     var __base64Image: _root_.scala.Predef.String = ""
     var __neighborhood: _root_.scala.Predef.String = ""
     val __tags: _root_.scala.collection.immutable.VectorBuilder[_root_.scala.Predef.String] = new _root_.scala.collection.immutable.VectorBuilder[_root_.scala.Predef.String]
-    var __creationDate: _root_.scala.Option[com.google.protobuf.timestamp.Timestamp] = _root_.scala.None
+    var __timestamp: _root_.scala.Predef.String = ""
     var __edited: _root_.scala.Boolean = false
     var `_unknownFields__`: _root_.scalapb.UnknownFieldSet.Builder = null
     var _done__ = false
@@ -194,16 +219,18 @@ object FetchedPosts extends scalapb.GeneratedMessageCompanion[cityfeed.applicati
         case 10 =>
           __ownerUser = _input__.readStringRequireUtf8()
         case 18 =>
-          __message = _input__.readStringRequireUtf8()
+          __username = _input__.readStringRequireUtf8()
         case 26 =>
-          __base64Image = _input__.readStringRequireUtf8()
+          __message = _input__.readStringRequireUtf8()
         case 34 =>
-          __neighborhood = _input__.readStringRequireUtf8()
+          __base64Image = _input__.readStringRequireUtf8()
         case 42 =>
-          __tags += _input__.readStringRequireUtf8()
+          __neighborhood = _input__.readStringRequireUtf8()
         case 50 =>
-          __creationDate = Option(__creationDate.fold(_root_.scalapb.LiteParser.readMessage[com.google.protobuf.timestamp.Timestamp](_input__))(_root_.scalapb.LiteParser.readMessage(_input__, _)))
-        case 56 =>
+          __tags += _input__.readStringRequireUtf8()
+        case 58 =>
+          __timestamp = _input__.readStringRequireUtf8()
+        case 64 =>
           __edited = _input__.readBool()
         case tag =>
           if (_unknownFields__ == null) {
@@ -214,11 +241,12 @@ object FetchedPosts extends scalapb.GeneratedMessageCompanion[cityfeed.applicati
     }
     cityfeed.application.grpc.FetchedPosts(
         ownerUser = __ownerUser,
+        username = __username,
         message = __message,
         base64Image = __base64Image,
         neighborhood = __neighborhood,
         tags = __tags.result(),
-        creationDate = __creationDate,
+        timestamp = __timestamp,
         edited = __edited,
         unknownFields = if (_unknownFields__ == null) _root_.scalapb.UnknownFieldSet.empty else _unknownFields__.result()
     )
@@ -228,67 +256,66 @@ object FetchedPosts extends scalapb.GeneratedMessageCompanion[cityfeed.applicati
       _root_.scala.Predef.require(__fieldsMap.keys.forall(_.containingMessage eq scalaDescriptor), "FieldDescriptor does not match message type.")
       cityfeed.application.grpc.FetchedPosts(
         ownerUser = __fieldsMap.get(scalaDescriptor.findFieldByNumber(1).get).map(_.as[_root_.scala.Predef.String]).getOrElse(""),
-        message = __fieldsMap.get(scalaDescriptor.findFieldByNumber(2).get).map(_.as[_root_.scala.Predef.String]).getOrElse(""),
-        base64Image = __fieldsMap.get(scalaDescriptor.findFieldByNumber(3).get).map(_.as[_root_.scala.Predef.String]).getOrElse(""),
-        neighborhood = __fieldsMap.get(scalaDescriptor.findFieldByNumber(4).get).map(_.as[_root_.scala.Predef.String]).getOrElse(""),
-        tags = __fieldsMap.get(scalaDescriptor.findFieldByNumber(5).get).map(_.as[_root_.scala.Seq[_root_.scala.Predef.String]]).getOrElse(_root_.scala.Seq.empty),
-        creationDate = __fieldsMap.get(scalaDescriptor.findFieldByNumber(6).get).flatMap(_.as[_root_.scala.Option[com.google.protobuf.timestamp.Timestamp]]),
-        edited = __fieldsMap.get(scalaDescriptor.findFieldByNumber(7).get).map(_.as[_root_.scala.Boolean]).getOrElse(false)
+        username = __fieldsMap.get(scalaDescriptor.findFieldByNumber(2).get).map(_.as[_root_.scala.Predef.String]).getOrElse(""),
+        message = __fieldsMap.get(scalaDescriptor.findFieldByNumber(3).get).map(_.as[_root_.scala.Predef.String]).getOrElse(""),
+        base64Image = __fieldsMap.get(scalaDescriptor.findFieldByNumber(4).get).map(_.as[_root_.scala.Predef.String]).getOrElse(""),
+        neighborhood = __fieldsMap.get(scalaDescriptor.findFieldByNumber(5).get).map(_.as[_root_.scala.Predef.String]).getOrElse(""),
+        tags = __fieldsMap.get(scalaDescriptor.findFieldByNumber(6).get).map(_.as[_root_.scala.Seq[_root_.scala.Predef.String]]).getOrElse(_root_.scala.Seq.empty),
+        timestamp = __fieldsMap.get(scalaDescriptor.findFieldByNumber(7).get).map(_.as[_root_.scala.Predef.String]).getOrElse(""),
+        edited = __fieldsMap.get(scalaDescriptor.findFieldByNumber(8).get).map(_.as[_root_.scala.Boolean]).getOrElse(false)
       )
     case _ => throw new RuntimeException("Expected PMessage")
   }
   def javaDescriptor: _root_.com.google.protobuf.Descriptors.Descriptor = FeedProto.javaDescriptor.getMessageTypes().get(3)
   def scalaDescriptor: _root_.scalapb.descriptors.Descriptor = FeedProto.scalaDescriptor.messages(3)
-  def messageCompanionForFieldNumber(__number: _root_.scala.Int): _root_.scalapb.GeneratedMessageCompanion[_] = {
-    var __out: _root_.scalapb.GeneratedMessageCompanion[_] = null
-    (__number: @_root_.scala.unchecked) match {
-      case 6 => __out = com.google.protobuf.timestamp.Timestamp
-    }
-    __out
-  }
+  def messageCompanionForFieldNumber(__number: _root_.scala.Int): _root_.scalapb.GeneratedMessageCompanion[_] = throw new MatchError(__number)
   lazy val nestedMessagesCompanions: Seq[_root_.scalapb.GeneratedMessageCompanion[_ <: _root_.scalapb.GeneratedMessage]] = Seq.empty
   def enumCompanionForFieldNumber(__fieldNumber: _root_.scala.Int): _root_.scalapb.GeneratedEnumCompanion[_] = throw new MatchError(__fieldNumber)
   lazy val defaultInstance = cityfeed.application.grpc.FetchedPosts(
     ownerUser = "",
+    username = "",
     message = "",
     base64Image = "",
     neighborhood = "",
     tags = _root_.scala.Seq.empty,
-    creationDate = _root_.scala.None,
+    timestamp = "",
     edited = false
   )
   implicit class FetchedPostsLens[UpperPB](_l: _root_.scalapb.lenses.Lens[UpperPB, cityfeed.application.grpc.FetchedPosts]) extends _root_.scalapb.lenses.ObjectLens[UpperPB, cityfeed.application.grpc.FetchedPosts](_l) {
     def ownerUser: _root_.scalapb.lenses.Lens[UpperPB, _root_.scala.Predef.String] = field(_.ownerUser)((c_, f_) => c_.copy(ownerUser = f_))
+    def username: _root_.scalapb.lenses.Lens[UpperPB, _root_.scala.Predef.String] = field(_.username)((c_, f_) => c_.copy(username = f_))
     def message: _root_.scalapb.lenses.Lens[UpperPB, _root_.scala.Predef.String] = field(_.message)((c_, f_) => c_.copy(message = f_))
     def base64Image: _root_.scalapb.lenses.Lens[UpperPB, _root_.scala.Predef.String] = field(_.base64Image)((c_, f_) => c_.copy(base64Image = f_))
     def neighborhood: _root_.scalapb.lenses.Lens[UpperPB, _root_.scala.Predef.String] = field(_.neighborhood)((c_, f_) => c_.copy(neighborhood = f_))
     def tags: _root_.scalapb.lenses.Lens[UpperPB, _root_.scala.Seq[_root_.scala.Predef.String]] = field(_.tags)((c_, f_) => c_.copy(tags = f_))
-    def creationDate: _root_.scalapb.lenses.Lens[UpperPB, com.google.protobuf.timestamp.Timestamp] = field(_.getCreationDate)((c_, f_) => c_.copy(creationDate = Option(f_)))
-    def optionalCreationDate: _root_.scalapb.lenses.Lens[UpperPB, _root_.scala.Option[com.google.protobuf.timestamp.Timestamp]] = field(_.creationDate)((c_, f_) => c_.copy(creationDate = f_))
+    def timestamp: _root_.scalapb.lenses.Lens[UpperPB, _root_.scala.Predef.String] = field(_.timestamp)((c_, f_) => c_.copy(timestamp = f_))
     def edited: _root_.scalapb.lenses.Lens[UpperPB, _root_.scala.Boolean] = field(_.edited)((c_, f_) => c_.copy(edited = f_))
   }
   final val OWNERUSER_FIELD_NUMBER = 1
-  final val MESSAGE_FIELD_NUMBER = 2
-  final val BASE64IMAGE_FIELD_NUMBER = 3
-  final val NEIGHBORHOOD_FIELD_NUMBER = 4
-  final val TAGS_FIELD_NUMBER = 5
-  final val CREATIONDATE_FIELD_NUMBER = 6
-  final val EDITED_FIELD_NUMBER = 7
+  final val USERNAME_FIELD_NUMBER = 2
+  final val MESSAGE_FIELD_NUMBER = 3
+  final val BASE64IMAGE_FIELD_NUMBER = 4
+  final val NEIGHBORHOOD_FIELD_NUMBER = 5
+  final val TAGS_FIELD_NUMBER = 6
+  final val TIMESTAMP_FIELD_NUMBER = 7
+  final val EDITED_FIELD_NUMBER = 8
   def of(
     ownerUser: _root_.scala.Predef.String,
+    username: _root_.scala.Predef.String,
     message: _root_.scala.Predef.String,
     base64Image: _root_.scala.Predef.String,
     neighborhood: _root_.scala.Predef.String,
     tags: _root_.scala.Seq[_root_.scala.Predef.String],
-    creationDate: _root_.scala.Option[com.google.protobuf.timestamp.Timestamp],
+    timestamp: _root_.scala.Predef.String,
     edited: _root_.scala.Boolean
   ): _root_.cityfeed.application.grpc.FetchedPosts = _root_.cityfeed.application.grpc.FetchedPosts(
     ownerUser,
+    username,
     message,
     base64Image,
     neighborhood,
     tags,
-    creationDate,
+    timestamp,
     edited
   )
   // @@protoc_insertion_point(GeneratedMessageCompanion[feed.FetchedPosts])

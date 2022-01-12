@@ -7,6 +7,7 @@
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://localhost:5432/cityfeed</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
+      <time-zone>Europe/Bucharest</time-zone>
     </data-source>
   </component>
 </project>

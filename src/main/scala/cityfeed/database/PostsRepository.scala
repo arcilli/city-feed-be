@@ -1,6 +1,5 @@
 package cityfeed.database
 
-import akka.http.scaladsl.model.DateTime
 import cats.effect.IO
 import cityfeed.application.grpc.{FetchedPosts, PostRequest}
 import cityfeed.model.User
@@ -10,11 +9,13 @@ import doobie.util.transactor.Transactor
 import doobie.postgres.implicits._
 import cats.implicits._
 import doobie.implicits._
+import doobie.implicits.javasql._
+import doobie.implicits.javatime._
 import doobie.util.compat.FactoryCompat
 import cityfeed.database.MetaMappings._
-import com.google.protobuf.timestamp.Timestamp
 import com.typesafe.scalalogging.LazyLogging
 
+import java.sql.Timestamp
 import java.util.UUID
 
 trait PostsRepository[F[_]] {
@@ -33,13 +34,15 @@ object PostsRepository extends LazyLogging{
            | tags,
            | city,
            | neighborhood,
-           | user_id ) VALUES (
+           | user_id,
+           | owner_full_name) VALUES (
            | ${post.message},
            | ${post.base64Image},
            | $userTags,
            | ${user.city},
            | ${user.neighborhood},
-           | ${user.id.get}
+           | ${user.id.get},
+           | ${user.fullName}
            |)
            |""".stripMargin.update.run.transact(xa)
     }
@@ -47,21 +50,24 @@ object PostsRepository extends LazyLogging{
     override def fetchPosts(user: User, amount: Int): IO[List[FetchedPosts]] = {
       user.seenPosts.toNel match {
         case Some(seenPostsNel) =>
-          (fr""" SELECT user_id, text, encodedimg, neighborhood, edited
+          (fr""" SELECT user_id, text, encodedimg, neighborhood, edited, created_date, owner_full_name
                            | FROM posts
                            | WHERE city = ${user.city}
                            | AND neighborhood = ${user.neighborhood}
                            | AND """ ++ Fragments.notIn(fr"id", seenPostsNel) ++
             fr"""ORDER BY created_date DESC LIMIT $amount""")
             .stripMargin
-            .query[(UUID, String, String, String, Boolean)]
+            .query[(UUID, String, String, String, Boolean, Timestamp, String)]
             .map {
-              case (userId, message, base64Img, neighborhood, edited) =>
+              case (userId, message, base64Img, neighborhood, edited, createdDate, fullName) =>
+                logger.debug(s"$fullName")
                 FetchedPosts(
                   ownerUser = userId.toString,
+                  username = fullName,
                   message = message,
                   base64Image = base64Img,
                   neighborhood = neighborhood,
+                  timestamp = createdDate.toString,
                   edited = edited
                 )
             }
@@ -70,21 +76,23 @@ object PostsRepository extends LazyLogging{
             .toList
             .transact(xa)
         case None =>
-          sql"""SELECT user_id, text, encodedimg, neighborhood, edited
+          sql"""SELECT user_id, text, encodedimg, neighborhood, edited, created_date, owner_full_name
             | FROM posts
             | WHERE city = ${user.city}
             | AND neighborhood = ${user.neighborhood}
             | ORDER BY created_date DESC LIMIT $amount"""
             .stripMargin
-          .query[(UUID, String, String, String, Boolean)]
+          .query[(UUID, String, String, String, Boolean, Timestamp, String)]
           .map {
-            case (userId, message, base64Img, neighborhood, edited) =>
+            case (userId, message, base64Img, neighborhood, edited, createdDate, fullName) =>
               FetchedPosts(
                 ownerUser = userId.toString,
+                username = fullName,
                 message = message,
                 base64Image = base64Img,
                 neighborhood = neighborhood,
-                edited = edited
+                edited = edited,
+                timestamp = createdDate.toString
               )
           }
           .stream

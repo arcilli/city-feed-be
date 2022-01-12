@@ -7,3 +7,4 @@
 [0m[[0m[0mdebug[0m] [0m[0m	(C:\city-feed\city-feed-be\src\main\resources\db\migrations\V3__Create_posts_table.sql,C:\city-feed\city-feed-be\target\scala-2.13\classes\db\migrations\V3__Create_posts_table.sql)[0m
 [0m[[0m[0mdebug[0m] [0m[0m	(C:\city-feed\city-feed-be\src\main\resources\db\migrations\V4__Add_seen_posts_list_in_user_info.sql,C:\city-feed\city-feed-be\target\scala-2.13\classes\db\migrations\V4__Add_seen_posts_list_in_user_info.sql)[0m
 [0m[[0m[0mdebug[0m] [0m[0m	(C:\city-feed\city-feed-be\src\main\resources\db\migrations\V5__Add_edited_column_to_posts_table.sql,C:\city-feed\city-feed-be\target\scala-2.13\classes\db\migrations\V5__Add_edited_column_to_posts_table.sql)[0m
+[0m[[0m[0mdebug[0m] [0m[0m	(C:\city-feed\city-feed-be\src\main\resources\db\migrations\V6__Add_full_name_column_to_posts_table.sql,C:\city-feed\city-feed-be\target\scala-2.13\classes\db\migrations\V6__Add_full_name_column_to_posts_table.sql)[0m
